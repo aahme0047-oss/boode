@@ -6,7 +6,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.request import HTTPXRequest
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
-TOKEN = "8880729702:AAGvAiQOhvoti3FRf23oXNUpEhnOhV_8uFQ"
+TOKEN = os.environ.get("BOT_TOKEN", "8880729702:AAGvAiQOhvoti3FRf23oXNUpEhnOhV_8uFQ")
 DOWNLOAD_DIR = "downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
@@ -21,7 +21,6 @@ def download_video(url: str, progress_cb=None) -> dict:
                 progress_cb(d.get("downloaded_bytes", 0) / total)
 
     ydl_opts = {
-        # صيغة مرنة: أفضل فيديو + أفضل صوت، وإذا لم يتوفر الدمج يأخذ أفضل ملف جاهز
         "format": "bv*+ba/b",
         "merge_output_format": "mp4",
         "outtmpl": outtmpl,
